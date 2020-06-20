@@ -1,0 +1,9 @@
+name: Lobby-System
+version: 1.0
+author: SpigotSource
+softdepend: [RedAPI-Bukkit]
+depend: [RedAPI-Bukkit, LabyModAPI]
+main: net.redcw.lobbysystem.LobbySystem
+
+commands:
+  setup:
