@@ -10,6 +10,7 @@ import net.redcw.lobbysystem.player.IPlayerScoreboard;
 import net.redcw.redapi.RedAPI;
 import net.redcw.redapi.bukkit.game.Scoreboard;
 import net.redcw.redapi.language.LanguageDefinition;
+import org.bson.Document;
 import org.bukkit.entity.Player;
 
 public class ScoreboardManager implements IPlayerScoreboard {
@@ -52,11 +53,27 @@ public class ScoreboardManager implements IPlayerScoreboard {
         scoreboard.setLine(9, "  §8» §7Coins", "§4");
         scoreboard.setLine(8, "    §8➥ §7", "§c" + RedAPI.getInstance().getTextService().formatInteger(RedAPI.getInstance().getRedPlayerProvider().getRedPlayer(player.getUniqueId()).$coins()));
         scoreboard.setLine(7, "§5", "§6");
-        scoreboard.setLine(6, "  §8» §7RedPass", "§5");
-        scoreboard.setLine(5, "    §8➥ §7", "§c§o" + (german ? "Keinen" : "none"));
+        scoreboard.setLine(6, "  §8» §7Clan", "§6");
+
+        if(LobbyService.getInstance().getClanDocuments().containsKey(player.getUniqueId())) {
+            final Document clanDocument = LobbyService.getInstance().getClanDocuments().get(player.getUniqueId());
+
+            String[] clanName = new String[]{"a", "b"};
+            if(clanDocument.getString("name").length() > 6) {
+                clanName[0] = clanDocument.getString("name").split(String.valueOf(clanDocument.getString("name").toCharArray()[6]))[0];
+                clanName[1] = clanDocument.getString("name").split(String.valueOf(clanDocument.getString("name").toCharArray()[6]))[1];
+
+                scoreboard.setLine(5, "    §8➥ §e" + clanName[0], "§e" + clanName[1] + " §8[§6" + clanDocument.getString("tag") + "§8]");
+            } else {
+                scoreboard.setLine(5, "    §8➥ §e" + clanDocument.getString("name"),  " §8[§6" + clanDocument.getString("tag") + "§8]");
+            }
+        } else {
+            scoreboard.setLine(5, "    §8➥ §c", "§c§oKein Clan");
+        }
+
         scoreboard.setLine(4, "§7", "§8");
-        scoreboard.setLine(3, "  §8» §7Twitter", "§6");
-        scoreboard.setLine(2, "    §8➥ §7§4@§c", "§cRedCWNetwork");
+        scoreboard.setLine(3, "  §8» §7RedPass", "§5");
+        scoreboard.setLine(2, "    §8➥ §7", "§c§o" + (german ? "Keinen" : "none"));
         scoreboard.setLine(1, "§9", "§0");
         scoreboard.setLine(0, "§8§m-------", "§8§m-------");
 

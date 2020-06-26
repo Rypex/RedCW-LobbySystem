@@ -28,11 +28,15 @@ public class PlayerLoginListener implements Listener {
     public void onLogin(final PlayerLoginEvent event)
     {
         LobbyPlayer lobbyPlayer = LobbyService.getInstance().getLobbyPlayerProvider().getPlayer(event.getPlayer().getUniqueId());
-        if (lobbyPlayer == null)
-        {
+        if (lobbyPlayer == null) {
             lobbyPlayer = new LobbyPlayer(event.getPlayer().getUniqueId(), LobbyService.getInstance().getSpawnLocations().getPosition("Spawn"), new Timestamp(0L));
             LobbyService.getInstance().getLobbyPlayerProvider().registerPlayer(lobbyPlayer);
         }
+
+        final Document clanDocument = RedAPI.getInstance().getMongoDatabase().getCollection("bungee_clan_list").find(new Document("name", RedAPI.getInstance().getMongoDatabase().getCollection("bungee_clan_user").find(new Document("uniqueId", event.getPlayer().getUniqueId().toString())).first().getString("clan"))).first();
+
+        if(clanDocument != null)
+            LobbyService.getInstance().getClanDocuments().put(event.getPlayer().getUniqueId(), clanDocument);
 
         LobbyService.getInstance().getPlayerCookies().put(event.getPlayer().getUniqueId(), lobbyPlayer.getCookies());
 

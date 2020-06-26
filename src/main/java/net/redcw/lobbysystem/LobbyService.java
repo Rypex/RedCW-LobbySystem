@@ -39,6 +39,7 @@ import net.redcw.redapi.language.LanguageDefinition;
 import net.redcw.redapi.player.RedPlayerProperty;
 import net.redcw.redapi.player.RedPlayerSkinData;
 import net.redcw.redapi.positions.PositionProvider;
+import org.bson.Document;
 import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -75,13 +76,14 @@ public class LobbyService {
 
     private MongoManager mongoManager;
 
-    private Map<ItemType, ItemStack> germanItems = new ConcurrentHashMap<>();
-    private Map<ItemType, ItemStack> englishItems = new ConcurrentHashMap<>();
+    private Map<ItemType, ItemStack> germanItems = Maps.newConcurrentMap();
+    private Map<ItemType, ItemStack> englishItems = Maps.newConcurrentMap();
 
-    private Map<UUID, Scoreboard> playerScoreboard = new ConcurrentHashMap<>();
-    private Map<UUID, PermissionGroup> playerGroups = new ConcurrentHashMap<>();
-    private Map<UUID, Map<String, GameStats>> playerGameStats = new ConcurrentHashMap<>();
+    private Map<UUID, Scoreboard> playerScoreboard = Maps.newConcurrentMap();
+    private Map<UUID, PermissionGroup> playerGroups = Maps.newConcurrentMap();
+    private Map<UUID, Map<String, GameStats>> playerGameStats = Maps.newConcurrentMap();
     private Map<UUID, Integer> playerCookies = Maps.newConcurrentMap();
+    private Map<UUID, Document> clanDocuments = Maps.newConcurrentMap();
 
     private Map<Location, RedNPC> npcMap = Maps.newConcurrentMap();
 
