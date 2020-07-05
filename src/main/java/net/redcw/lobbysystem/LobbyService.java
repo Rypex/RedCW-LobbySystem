@@ -104,6 +104,7 @@ public class LobbyService {
     private Location cookieLocation;
 
     private Witch dailyRewardEntity;
+    private Sheep akinatorSheep;
 
     private Animator chestAnimator;
 
@@ -154,7 +155,19 @@ public class LobbyService {
 
         freezeEntity(dailyRewardEntity);
 
-        new StaticHologram(dailyRewardEntity.getLocation().add(0, 2.0, 0), "§8» §6§lDaily§e§lReward §8«", 0).spawn();
+        new StaticHologram(dailyRewardEntity.getLocation().add(0, 1.8, 0), "§8» §6§lDaily§e§lReward §8«", 0).spawn();
+
+        akinatorSheep = (Sheep) Bukkit.getWorld("Lobby").spawnEntity(new Location(Bukkit.getWorld("Lobby"), 183.5, 39.5, 829.5, 0, 0), EntityType.SHEEP);
+        akinatorSheep.setCustomNameVisible(false);
+        akinatorSheep.setColor(DyeColor.ORANGE);
+
+        freezeEntity(akinatorSheep);
+
+        new StaticHologram(akinatorSheep.getLocation().add(0, 1.8, 0), "§8» §e§lAkinator §8«", 0).spawn();
+
+        /*npcMap.put(new Location(Bukkit.getWorld("Lobby"), 186.5, 39, 830.5, 25, 0), new RedNPC(
+                new Location(Bukkit.getWorld("Lobby"), 186.5, 39, 830.5, 25, 0),
+                , , , , ))*/
 
         npcMap.put(new Location(Bukkit.getWorld("Lobby"), 183.5, 36, 802.5, 0, 0), new RedNPC(
                 new Location(Bukkit.getWorld("Lobby"), 183.5, 36, 802.5, 0, 0),
